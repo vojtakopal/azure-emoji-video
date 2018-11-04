@@ -30,10 +30,22 @@
     });
 
     const renderFace = face => {
-        const { top, left, width, height, age, gender } = face;
+        const { top, left, width, height, age, gender, emotion } = face;
+        const majorEmotion = Object.keys(emotion).reduce((acc, name) => emotion[name] > acc.value ? { name, value: emotion[name] } : acc, { name: 'none', value: 0 });
+        const barHeight = 2*fontPadding+fontSize;
+
         context.rect(left, top, width, height);
+
+        // top
         context.fillStyle = 'black';
-        context.fillRect(left, top+height, width, 2*fontPadding+fontSize);
+        context.fillRect(left, top-barHeight, width, barHeight);
+        context.font = `bold ${fontSize}px verdana, sans-serif`;
+        context.fillStyle = 'white';
+        context.fillText(majorEmotion.name, left+fontPadding, top-fontPadding);
+
+        // bottom
+        context.fillStyle = 'black';
+        context.fillRect(left, top+height, width, barHeight);
         context.font = `bold ${fontSize}px verdana, sans-serif`;
         context.fillStyle = 'white';
         context.fillText(`${age}, ${gender}`, left+fontPadding, top+height+fontSize);
@@ -109,13 +121,18 @@
     const video = document.createElement('video');
     const canvas = document.createElement('canvas');
     const button = document.createElement('button');
+    const buttonWrapper = document.createElement('div');
 
+    button.setAttribute('type', 'button');
+    button.className = 'btn btn-default';
     button.innerText = 'Start';
     button.addEventListener('click', handleButtonClick({ canvas, video }));
 
+    buttonWrapper.style.padding = '1em';
+
     container.appendChild(video);
     container.appendChild(canvas);
-    container.appendChild(document.createElement('div')).appendChild(button);
+    container.appendChild(buttonWrapper).appendChild(button);
     
     video.style.display = 'none';
     video.setAttribute('autoplay', '');

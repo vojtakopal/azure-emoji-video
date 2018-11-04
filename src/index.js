@@ -11,7 +11,7 @@ app.post('/detect', (req, res) => {
     req.on('end', () => {
         const buffer = Buffer.concat(data);
         axios.post(
-            `${process.env.API_URL}/detect?returnFaceId=true&returnFaceLandmarks=false&returnFaceAttributes=age,gender`,
+            `${process.env.API_URL}/detect?returnFaceId=true&returnFaceLandmarks=false&returnFaceAttributes=age,gender,emotion`,
             buffer,
             { 
                 headers: {
