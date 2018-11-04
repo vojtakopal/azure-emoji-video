@@ -5,7 +5,7 @@
 
     const fontPadding = 2;
     const fontSize = 20;
-    const defaultWidth = 640;
+    const defaultWidth = 320;
 
     const startWebcam = ({ video, canvas }) => navigator.mediaDevices.getUserMedia({
         video: true,
@@ -118,6 +118,10 @@
     container.appendChild(document.createElement('div')).appendChild(button);
     
     video.style.display = 'none';
+    video.setAttribute('autoplay', '');
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+
     context = canvas.getContext('2d');
 
 })(document.getElementById('app'));
